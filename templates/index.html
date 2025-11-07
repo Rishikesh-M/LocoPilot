@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DeepSeek OCR Web</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<style>
+    body {
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #f5f5f5;
+  text-align: center;
+  padding: 20px;
+}
+h1 {
+  color: #00ffb0;
+}
+form {
+  margin: 20px auto;
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+}
+input, select, button {
+  padding: 8px;
+  margin-top: 10px;
+  border-radius: 5px;
+  border: none;
+}
+button {
+  background: #00ffb0;
+  color: #000;
+  font-weight: bold;
+  cursor: pointer;
+}
+button:hover {
+  background: #00d494;
+}
+pre {
+  background: #1e1e1e;
+  padding: 10px;
+  border-radius: 10px;
+  text-align: left;
+  white-space: pre-wrap;
+}
+
+</style>
+<body>
+  <h1>🧠 DeepSeek OCR Web UI</h1>
+
+  <form method="POST" enctype="multipart/form-data">
+    <label>Upload an image:</label><br>
+    <input type="file" name="image" accept="image/*" required><br><br>
+
+    <label>Select mode:</label>
+    <select name="prompt_type">
+      <option value="text">Extract Text (OCR)</option>
+      <option value="markdown">Convert to Markdown</option>
+    </select><br><br>
+
+    <button type="submit">Process Image</button>
+  </form>
+
+  {% if filename %}
+    <h2>Uploaded Image:</h2>
+    <img src="{{ url_for('static', filename='../uploads/' + filename) }}" width="300"><br>
+  {% endif %}
+
+  {% if result %}
+    <h2>📝 OCR Result:</h2>
+    <pre>{{ result }}</pre>
+  {% endif %}
+
+  {% if error %}
+    <p style="color: red;">{{ error }}</p>
+  {% endif %}
+</body>
+</html>
